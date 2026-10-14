@@ -1,5 +1,3 @@
-# facturacion_sensores_industriales
-
 # 🧾 Sistema de Facturación de Sensores
 
 ## 📌 Descripción del proyecto
