@@ -37,35 +37,6 @@ class Cliente:
       calcular_factura = self.calcular_valor_factura(self.numero_servicios,self.precio_sensor)
       return f"Cliente: {self.nit} - {self.nombre_cliente} \nSensores activos: {self.numero_servicios} \nPrecio de cada sensor: {self.precio_sensor} \n---------------------------- \nValor a pagar: {calcular_factura}"
 
-def calcular_valor_factura(numero_servicios:int,precio_sensor:float)->float:
-  """Devuelve un float que contiene el valor de servicios que debera pagar cada Cliente
-  según su "numero de servicios" y el "precio unitario" de cada sensor multiplicandolo por
-  un valor fijo del iva que seria el 19%.
-  "numero_servicios": Es un entero que contiene el número de servicios que estan siendo
-  utilizados actualmente por la empresa.
-  "precio_sensor": Es un flotante que contiene el precio unitario de cada sensor
-  que podria variar según el cliente."""
-
-  porcentaje_iva = 19/100 #VALOR FIJO PUESTO POR LA EMPRESA
-  
-  iva = porcentaje_iva * (numero_servicios * precio_sensor)
-  valor_servicios = (numero_servicios * precio_sensor) + iva
-
-  if precio_sensor < 0:
-    raise PrecioInvalido
-
-  if numero_servicios < 0:
-    raise ServiciosInvalidos
-
-  if numero_servicios == 0:
-      raise ServiciosInvalidos
-
-  if precio_sensor == 0:
-    raise PrecioInvalido
-  
-  return valor_servicios
-
-
 class ServiciosInvalidos(Exception):
     def __init__(self):
         super().__init__(
@@ -95,10 +66,18 @@ def verificar_precio_unitario(precio_unitario):
         raise PrecioInvalido()
 
 def calcular_valor_factura(numero_servicios: int, precio_unitario: float) -> float:
+    """Devuelve un float que contiene el valor de servicios que debera pagar cada Cliente
+    según su "numero de servicios" y el "precio unitario" de cada sensor multiplicandolo por
+    un valor fijo del iva que seria el 19%.
+    "numero_servicios": Es un entero que contiene el número de servicios que estan siendo
+    utilizados actualmente por la empresa.
+    "precio_sensor": Es un flotante que contiene el precio unitario de cada sensor
+    que podria variar según el cliente."""
+
     verificar_numero_servicios(numero_servicios)
     verificar_precio_unitario(precio_unitario)
 
-    porcentaje_iva = 19 / 100
+    porcentaje_iva = 19 / 100  #VALOR FIJO PUESTO POR LA EMPRESA
     iva = porcentaje_iva * (numero_servicios * precio_unitario)
     valor_servicios = (numero_servicios * precio_unitario) + iva
 
