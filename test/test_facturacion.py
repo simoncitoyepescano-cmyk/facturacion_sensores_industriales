@@ -2,7 +2,7 @@ import unittest
 import sys
 
 sys.path.append("src")
-from model import logica_sensores
+from src.model import logica_sensores
 
 class TestsFacturacion(unittest.TestCase):
     """
