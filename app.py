@@ -11,6 +11,11 @@ app = Flask(__name__)
 def inicio():
     return render_template("nuevo_cliente.html")
 
+@app.route('/crear_tablas')
+def crear_tablas():
+    ClienteController.crear_tabla()
+    return "Tablas creadas exitosamente"
+
 
 # Recibir los datos y guardar el cliente
 @app.route('/guardar_cliente', methods=['POST'])
