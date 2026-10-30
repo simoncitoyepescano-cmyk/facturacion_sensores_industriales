@@ -735,3 +735,5 @@ La incorporación de PostgreSQL permite almacenar y consultar la información de
 
 Como futura mejora, se plantea incorporar los **meses del servicio como una variable de entrada**, haciendo que el sistema sea más flexible y pueda adaptarse a diferentes periodos de facturación.
 
+https://facturacion-sensores-industriales.onrender.com/
+
