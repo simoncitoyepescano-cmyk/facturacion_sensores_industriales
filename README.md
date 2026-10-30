@@ -2,63 +2,79 @@
 
 ## 📌 Descripción del proyecto
 
-Este proyecto consiste en el desarrollo de una función para calcular el **valor a pagar por la facturación de servicios de sensores de una empresa**.
+Este proyecto consiste en el desarrollo de un sistema para calcular y gestionar la facturación de servicios de sensores de una empresa.
 
 El proyecto fue desarrollado tomando como base **facturas reales proporcionadas por la empresa**, utilizando principalmente el número de servicios y el valor unitario registrados en ellas para comprobar que los resultados obtenidos por el programa fueran correctos.
 
-Además, en el repositorio se encuentra un **audio en el que se explica el proceso de facturación por sensores de la empresa**, permitiendo conocer el contexto del proceso que se está representando mediante el programa.
+Además, el sistema permite registrar y consultar la información de los clientes mediante una base de datos PostgreSQL.
+
+La aplicación está desarrollada en Python siguiendo el patrón **MVC (Modelo-Vista-Controlador)**, separando la lógica de facturación, las operaciones con la base de datos y la interacción con el usuario.
+
+En el repositorio también se encuentra un **audio en el que se explica el proceso de facturación por sensores de la empresa**, permitiendo conocer el contexto del proceso que se está representando mediante el programa.
 
 ---
 
 ## 🎯 Objetivo
 
-El objetivo principal es desarrollar y probar una función que permita calcular correctamente el valor total a pagar por los servicios de sensores, teniendo en cuenta la cantidad de servicios, el valor unitario y el IVA correspondiente.
+El objetivo principal es desarrollar un sistema que permita calcular correctamente el valor total a pagar por los servicios de sensores, teniendo en cuenta la cantidad de servicios, el valor unitario y el IVA correspondiente.
 
-También se busca comprobar el funcionamiento del programa mediante **pruebas unitarias**, incluyendo pruebas basadas en facturas reales, casos de error y casos extraordinarios.
+También se busca almacenar la información de los clientes en una base de datos PostgreSQL, permitiendo registrar nuevos clientes y consultar su información mediante el NIT.
+
+El funcionamiento del programa se comprueba mediante **pruebas unitarias**, incluyendo pruebas basadas en facturas reales, casos de error y casos extraordinarios.
 
 ---
 
 ## ⚙️ Funcionamiento
 
-El programa recibe dos valores de entrada:
+El programa recibe los siguientes datos de entrada:
 
+* 🪪 **NIT:** identificación del cliente.
+* 👤 **Nombre del cliente:** nombre o razón social.
 * 🔢 **Número de servicios:** cantidad de servicios o sensores que se deben facturar.
-* 💰 **Valor unitario:** valor correspondiente a cada servicio.
+* 💰 **Precio unitario:** valor correspondiente a cada servicio.
 
-El sistema calcula automáticamente el IVA del **19%** y lo agrega al valor de los servicios.
+El sistema calcula automáticamente el IVA del **19 %** y lo agrega al valor de los servicios.
 
 ### 🧮 Operación
 
-**Valor a pagar = (Número de servicios × Valor unitario) + ((Número de servicios × Valor unitario) × 19%)**
+**Subtotal = Número de servicios × Precio unitario**
+
+**IVA = Subtotal × 19 %**
+
+**Valor a pagar = Subtotal + IVA**
 
 ---
 
 ## 📥 Valores de entrada
 
-| Entrada                    | Descripción                                             |
-| -------------------------- | ------------------------------------------------------- |
-| 🔢 **Número de servicios** | Cantidad de servicios de sensores que se deben facturar |
-| 💰 **Valor unitario**      | Valor correspondiente a cada servicio                   |
+| Entrada | Descripción |
+|---|---|
+| 🪪 **NIT** | Identificación del cliente. |
+| 👤 **Nombre del cliente** | Nombre o razón social del cliente. |
+| 🔢 **Número de servicios** | Cantidad de servicios de sensores que se deben facturar. |
+| 💰 **Valor unitario** | Valor correspondiente a cada servicio. |
 
 ---
 
 ## 📤 Valor de salida
 
-| Salida               | Descripción                                            |
-| -------------------- | ------------------------------------------------------ |
-| 💵 **Valor a pagar** | Valor total de los servicios incluyendo el IVA del 19% |
+| Salida | Descripción |
+|---|---|
+| 💵 **Subtotal** | Valor de los servicios antes de IVA. |
+| 🧾 **IVA** | Impuesto calculado sobre el subtotal, correspondiente al 19 %. |
+| 💰 **Valor a pagar** | Valor total de los servicios incluyendo el IVA. |
 
 ---
 
 ## 🧾 IVA
 
-Para el proceso de facturación analizado en este proyecto se utiliza un **IVA fijo del 19%**.
+Para el proceso de facturación analizado en este proyecto se utiliza un **IVA fijo del 19 %**.
 
 El IVA es calculado automáticamente por el programa a partir del valor obtenido de multiplicar el número de servicios por el valor unitario.
 
 ---
 
-## 🧪 Pruebas unitarias
+## 🧪 Pruebas unitarias de la lógica de facturación
 
 Las pruebas fueron desarrolladas utilizando **Python y la librería `unittest`**.
 
@@ -80,7 +96,7 @@ El objetivo es verificar que los resultados calculados por el programa coincidan
 
 ---
 
-## ❌ Casos de error
+## ❌ Casos de error de la lógica de facturación
 
 Además de las pruebas realizadas con las facturas, se desarrollaron **4 casos de error** para comprobar el comportamiento del sistema cuando se ingresan datos inválidos.
 
@@ -130,15 +146,144 @@ El objetivo es comprobar que la función pueda manejar correctamente valores uni
 
 ### 📊 Resumen de pruebas especiales
 
-| Tipo              | Caso                  | Objetivo                         |
-| ----------------- | --------------------- | -------------------------------- |
-| 🔴 Error          | Servicios = `0`       | Validar cantidad de servicios    |
-| 🔴 Error          | Precio = `0`          | Validar valor unitario           |
-| 🔴 Error          | Servicios negativos   | Rechazar cantidades inválidas    |
-| 🔴 Error          | Precio negativo       | Rechazar valores inválidos       |
-| 🟣 Extraordinario | 100 servicios         | Probar una cantidad elevada      |
-| 🟣 Extraordinario | Precio decimal        | Probar valores con decimales     |
-| 🟣 Extraordinario | Precio de $10.000.000 | Probar un valor unitario elevado |
+| Tipo | Caso | Objetivo |
+|---|---|---|
+| 🔴 Error | Servicios = `0` | Validar cantidad de servicios. |
+| 🔴 Error | Precio = `0` | Validar valor unitario. |
+| 🔴 Error | Servicios negativos | Rechazar cantidades inválidas. |
+| 🔴 Error | Precio negativo | Rechazar valores inválidos. |
+| 🟣 Extraordinario | 100 servicios | Probar una cantidad elevada. |
+| 🟣 Extraordinario | Precio decimal | Probar valores con decimales. |
+| 🟣 Extraordinario | Precio de $10.000.000 | Probar un valor unitario elevado. |
+
+---
+
+## 🗄️ Base de datos PostgreSQL
+
+El proyecto incorpora una base de datos PostgreSQL para almacenar la información de los clientes y permitir su consulta.
+
+La conexión entre Python y PostgreSQL se realiza mediante la librería **`psycopg2`**.
+
+Los datos de conexión se configuran en el archivo `secret_config.py`, que contiene la información necesaria para establecer la conexión con la base de datos.
+
+### 📋 Tabla clientes
+
+El sistema utiliza una tabla llamada `clientes`, encargada de almacenar la información de los clientes registrados.
+
+La tabla contiene los siguientes campos:
+
+| Campo | Descripción |
+|---|---|
+| `id_cliente` | Identificador único del registro. |
+| `nit` | Identificación del cliente. |
+| `nombre_cliente` | Nombre del cliente. |
+| `numero_servicios` | Cantidad de servicios contratados. |
+| `precio_sensor` | Precio unitario de cada sensor. |
+| `iva` | Valor del IVA calculado. |
+| `valor_total` | Valor total incluyendo IVA. |
+| `fecha` | Fecha de registro del cliente. |
+
+El campo `nit` tiene una restricción de valor único para evitar registrar dos clientes con el mismo NIT.
+
+### ⚙️ Operaciones de la base de datos
+
+El controlador permite realizar las siguientes operaciones:
+
+* **CREATE TABLE:** crear la tabla `clientes`.
+* **DROP TABLE:** eliminar la tabla `clientes`.
+* **INSERT INTO:** insertar los datos de un cliente.
+* **SELECT:** consultar la información de un cliente mediante su NIT.
+
+---
+
+## 🧠 Modelo
+
+El modelo contiene la clase `Cliente`, encargada de representar la información de cada cliente.
+
+La clase se encuentra en:
+
+`src/model/logica_sensores.py`
+
+Sus atributos son:
+
+* `nit`
+* `nombre_cliente`
+* `numero_servicios`
+* `precio_sensor`
+
+También contiene la lógica principal encargada de calcular el valor de la factura y realizar las validaciones de los datos de entrada.
+
+La separación de esta lógica permite reutilizar los cálculos y mantener organizado el proyecto.
+
+---
+
+## 🎮 Controlador
+
+El controlador se encuentra en:
+
+`src/controller/__init__.py`
+
+Contiene la clase `ClienteController`, encargada de conectar el programa con PostgreSQL y ejecutar las operaciones sobre la tabla de clientes.
+
+Sus principales métodos son:
+
+| Método | Función |
+|---|---|
+| `obtener_conexion()` | Establece la conexión con PostgreSQL. |
+| `crear_tabla()` | Crea la tabla `clientes` si no existe. |
+| `eliminar_tabla()` | Elimina la tabla `clientes`. |
+| `insertar(cliente)` | Registra un cliente en la base de datos. |
+| `buscar_cliente(nit)` | Busca un cliente mediante su NIT. |
+
+### 📝 Inserción de clientes
+
+El método `insertar()` recibe un objeto de la clase `Cliente`.
+
+A partir de sus atributos calcula el subtotal, el IVA del 19 % y el valor total.
+
+Posteriormente, ejecuta una consulta SQL `INSERT INTO` para almacenar la información del cliente en PostgreSQL.
+
+### 🔎 Búsqueda de clientes
+
+El método `buscar_cliente()` recibe el NIT como parámetro y ejecuta una consulta SQL `SELECT` para encontrar el registro correspondiente.
+
+Si el cliente existe, devuelve su información. Si no se encuentra, devuelve `None`.
+
+---
+
+## 🧪 Pruebas unitarias del controlador y la base de datos
+
+Además de las pruebas de la lógica de facturación, el proyecto cuenta con pruebas unitarias para verificar las operaciones realizadas por el controlador sobre PostgreSQL.
+
+Estas pruebas utilizan **`unittest`** y se encuentran en:
+
+`test/test_cliente.py`
+
+Se utiliza un fixture para preparar la tabla de clientes antes de ejecutar las pruebas.
+
+Las pruebas permiten comprobar:
+
+* La creación de la tabla.
+* La eliminación de la tabla.
+* La inserción de clientes.
+* La búsqueda de clientes por NIT.
+* El manejo de errores durante las operaciones de la base de datos.
+
+### 📊 Casos de prueba del controlador
+
+| Operación | Caso | Resultado esperado |
+|---|---|---|
+| Crear tabla | La tabla no existe | La tabla se crea correctamente. |
+| Crear tabla | La tabla ya existe | La operación no genera error. |
+| Eliminar tabla | La tabla existe | La tabla se elimina correctamente. |
+| Insertar | Datos correctos | El cliente se registra. |
+| Insertar | NIT duplicado | Se genera un error por la restricción de unicidad. |
+| Buscar | NIT existente | Se devuelve la información del cliente. |
+| Buscar | NIT inexistente | Se devuelve `None`. |
+
+También se incluyen cinco casos exitosos de inserción y cinco búsquedas exitosas para comprobar el funcionamiento de estas operaciones con diferentes clientes.
+
+Las pruebas de la base de datos deben ejecutarse utilizando una base de datos destinada a pruebas, ya que algunas operaciones eliminan y vuelven a crear la tabla.
 
 ---
 
@@ -151,56 +296,60 @@ En este audio se explica el **proceso de facturación por sensores de la empresa
 El audio complementa la información presentada en el código, las facturas y las pruebas unitarias.
 
 ---
+
 # 📂 Estructura del repositorio
 
-El proyecto está organizado dentro de la carpeta principal FACTURACION_S, donde se encuentran los archivos de documentación, la información utilizada para las pruebas y el código fuente del sistema.
+El proyecto está organizado dentro de la carpeta principal `FACTURACION_S`, donde se encuentran los archivos de documentación, la información utilizada como referencia y el código fuente del sistema.
 
-```
+```text
 FACTURACION_S/
 │
-├── 📄 README.md
-│   └── Documentación general del proyecto
+├── README.md
+├── requirements.txt
+├── secret_config_sample.py
+├── secret_config.py
+├── probar_conexion.py
 │
-├── 🎧 Audio
+├── Audio
 │   └── Explicación del proceso de facturación por sensores
 │
-├── 📊 Archivo de Excel
+├── Archivo de Excel
 │   └── Información de facturas, casos de error y pruebas
 │
-└── 📁 src/
-    │
-    ├── 🧠 model/
-    │   ├── __init__.py
-    │   └── logica_sensores.py
-    │
-    ├── 🧪 test/
-    │   ├── __init__.py
-    │   └── test_facturacion.py
-    │
-    └── 🖥️ view/
-        ├── console/
-        │   ├── __init__.py
-        │   └── consola_sensores.py
-        │
-        └── gui/
-            └── facturacion_sensores.py
+├── src/
+│   │
+│   ├── controller/
+│   │   └── __init__.py
+│   │
+│   ├── model/
+│   │   ├── __init__.py
+│   │   └── logica_sensores.py
+│   │
+│   └── view_console/
+│       └── crear_cliente.py
+│
+└── test/
+    ├── __init__.py
+    └── test_cliente.py
 ```
-        
+
 ## 📄 README.md
 
 Contiene la documentación general del proyecto, incluyendo:
 
-Descripción del sistema.
-Objetivo.
-Funcionamiento.
-Valores de entrada y salida.
-Cálculo del IVA.
-Pruebas realizadas.
-Casos de error.
-Casos extraordinarios.
-Estructura del proyecto.
-Futuras implementaciones.
-Información de los autores.
+* Descripción del sistema.
+* Objetivo.
+* Funcionamiento.
+* Valores de entrada y salida.
+* Cálculo del IVA.
+* Información de la base de datos.
+* Modelo y controlador.
+* Pruebas realizadas.
+* Casos de error.
+* Casos extraordinarios.
+* Estructura del proyecto.
+* Instrucciones de instalación y ejecución.
+* Información de los autores.
 
 ## 🎧 Audio
 
@@ -216,44 +365,53 @@ Contiene la información utilizada como referencia para el desarrollo del proyec
 
 Contiene la lógica principal del sistema.
 
-__init__.py → Permite identificar la carpeta como un paquete de Python.
+* `__init__.py` → Permite identificar la carpeta como un paquete de Python.
+* `logica_sensores.py` → Contiene la clase `Cliente`, la función encargada de realizar el cálculo de la facturación y las validaciones de los datos de entrada.
 
-facturacion_sensores.py → Contiene la función encargada de realizar el cálculo de la facturación y las validaciones de los datos de entrada.
+## 🎮 controller
+
+Contiene el controlador encargado de gestionar las operaciones con la base de datos PostgreSQL.
+
+* `__init__.py` → Contiene la clase `ClienteController`, encargada de establecer la conexión con PostgreSQL, crear y eliminar la tabla, insertar clientes y buscar información mediante el NIT.
 
 ## 🧪 test
 
 Contiene las pruebas unitarias del proyecto.
 
-__init__.py → Permite identificar la carpeta como un paquete de Python.
+* `__init__.py` → Permite identificar la carpeta como un paquete de Python.
+* `test_cliente.py` → Contiene las pruebas de las operaciones del controlador, incluyendo creación y eliminación de la tabla, inserción de clientes, búsqueda de clientes y casos de error.
+* Las pruebas de la lógica de facturación también comprueban las facturas reales, los 4 casos de error y los 3 casos extraordinarios.
 
-test_facturacion.py → Contiene las pruebas basadas en las facturas reales, los 4 casos de error y los 3 casos extraordinarios.
+## 🖥️ view_console
 
-## 🖥️ view
+Contiene la parte encargada de la interacción con el usuario mediante la terminal.
 
-Contiene la parte encargada de la interacción con el usuario. Incluye dos interfaces:
+* `crear_cliente.py` → Permite registrar clientes, buscar clientes mediante el NIT, crear la tabla y ejecutar las opciones disponibles en el menú.
 
-* **console/** → Interfaz de consola (`consola_sensores.py`) para interactuar con el sistema de facturación desde la terminal.
-* **gui/** → Interfaz gráfica de usuario (`facturacion_sensores.py`), construida con **Kivy**, que permite ingresar los datos del cliente y calcular la factura mediante ventanas y botones en lugar de texto por consola.
+## ⚙️ Configuración
+
+* `requirements.txt` → Contiene las dependencias necesarias para ejecutar el proyecto.
+* `secret_config_sample.py` → Archivo de ejemplo que muestra los datos de conexión que se deben configurar.
+* `secret_config.py` → Contiene los datos reales de conexión a PostgreSQL. Este archivo es privado y no debe subirse al repositorio.
+* `probar_conexion.py` → Archivo utilizado para comprobar la conexión y el funcionamiento de las operaciones de la base de datos.
+
+---
 
 ## 🔗 Organización general
 
 La estructura del proyecto permite separar claramente cada responsabilidad:
 
-📊 Información → 🧠 Model → 🖥️ View → 🧪 Test
+**📊 Información → 🧠 Model → 🎮 Controller → 🖥️ View → 🧪 Test**
 
 De esta manera:
 
-📊 Excel: proporciona la información de referencia.
-
-🧠 Model: realiza los cálculos y validaciones.
-
-🖥️ View: permite la interacción mediante consola.
-
-🧪 Test: comprueba que el sistema funcione correctamente.
-
-🎧 Audio: explica el proceso real de facturación.
-
-📄 README: documenta todo el proyecto.
+* 📊 **Excel:** proporciona la información de referencia.
+* 🧠 **Model:** representa los clientes y realiza los cálculos y validaciones.
+* 🎮 **Controller:** conecta el programa con PostgreSQL y administra los datos.
+* 🖥️ **View:** permite la interacción mediante consola.
+* 🧪 **Test:** comprueba que el sistema funcione correctamente.
+* 🎧 **Audio:** explica el proceso real de facturación.
+* 📄 **README:** documenta todo el proyecto.
 
 ---
 
@@ -277,11 +435,13 @@ Al implementar los meses como una variable de entrada, el programa podría adapt
 
 ## 💻 Tecnologías utilizadas
 
-| Tecnología      | Uso                                       |
-| --------------- | ----------------------------------------- |
-| 🐍 **Python**   | Desarrollo del programa                   |
-| 🧪 **unittest** | Creación y ejecución de pruebas unitarias |
-| 🐙 **GitHub**   | Almacenamiento y gestión del proyecto     |
+| Tecnología | Uso |
+|---|---|
+| 🐍 **Python** | Desarrollo del programa. |
+| 🐘 **PostgreSQL** | Almacenamiento de información de clientes. |
+| 🔌 **psycopg2** | Conexión entre Python y PostgreSQL. |
+| 🧪 **unittest** | Creación y ejecución de pruebas unitarias. |
+| 🐙 **GitHub** | Almacenamiento y gestión del proyecto. |
 
 ---
 
@@ -289,7 +449,7 @@ Al implementar los meses como una variable de entrada, el programa podría adapt
 
 El proyecto se desarrolló siguiendo el siguiente proceso:
 
-**Facturas reales → Identificación de datos → Desarrollo de la función → Pruebas con facturas → Casos de error → Casos extraordinarios → Análisis de resultados**
+**Facturas reales → Identificación de datos → Desarrollo de la función → Pruebas con facturas → Casos de error → Casos extraordinarios → Diseño del modelo → Conexión a PostgreSQL → Desarrollo del controlador → Interfaz de usuario → Pruebas unitarias**
 
 De esta manera, el proyecto combina información real de la empresa con pruebas diseñadas para comprobar diferentes comportamientos del sistema.
 
@@ -303,181 +463,227 @@ Para ejecutar el proyecto y comprobar el funcionamiento de las pruebas, otra per
 
 Desde una terminal se debe ejecutar:
 
+```bash
 git clone URL_DEL_REPOSITORIO
+```
 
 Luego ingresar a la carpeta del proyecto:
 
-FACTURACION_S
+```bash
+cd FACTURACION_S
+```
 
 ## 2️⃣ Instalar dependencias
 
-El proyecto usa **Python 3** y, para la interfaz gráfica, la librería **Kivy**. Desde la carpeta `FACTURACION_S` se debe ejecutar:
+El proyecto utiliza **Python 3**, PostgreSQL y la librería `psycopg2`.
 
-```
+Desde la carpeta `FACTURACION_S` se debe ejecutar:
+
+```bash
 pip install -r requirements.txt
 ```
 
-## 3️⃣ Verificar la estructura del proyecto
+Si no se cuenta con el archivo de dependencias configurado, se puede instalar `psycopg2` mediante:
 
-
-Dentro de FACTURACION_S se encontrará la carpeta src, que contiene las diferentes partes del sistema:
-
-```
-FACTURACION_S/
-│
-├── README.md
-├── 🎧 Audio
-├── 📊 Archivo de Excel
-│
-└── src/
-    ├── model/
-    ├── test/
-    └── view/
+```bash
+pip install psycopg2
 ```
 
-## 4️⃣ Ejecutar las pruebas
+## 3️⃣ Configurar la conexión a PostgreSQL
 
-Las pruebas unitarias se encuentran dentro de:
+Asegúrese de tener una base de datos PostgreSQL creada y sus respectivos datos de acceso.
 
-src/test/test_facturacion.py
+Copie el archivo `secret_config_sample.py` como `secret_config.py` y establezca en este archivo los datos de conexión a su base de datos.
 
-Para ejecutarlas desde la terminal, ubicándose en la carpeta FACTURACION_S, se puede utilizar:
+El archivo debe contener los siguientes datos:
 
-python -m unittest discover -s src/test
+```python
+database = "nombre_base_datos"
+user = "usuario"
+password = "contraseña"
+host = "host"
+port = "puerto"
+```
 
-Este comando busca automáticamente las pruebas dentro de la carpeta src/test y las ejecuta.
+Los valores anteriores son ejemplos de configuración. Deben reemplazarse por los datos reales de conexión.
 
-## 5️⃣ Resultado esperado
+El archivo `secret_config.py` contiene información privada y no debe subirse al repositorio público.
 
-Al ejecutar las pruebas, el programa mostrará en la terminal el resultado de las pruebas realizadas.
+## 4️⃣ Verificar la estructura del proyecto
+
+Dentro de `FACTURACION_S` se encontrará la carpeta `src`, que contiene el modelo, el controlador y la interfaz de consola.
+
+También se encuentra la carpeta `test`, que contiene las pruebas unitarias.
+
+## 5️⃣ Ejecutar las pruebas unitarias
+
+Las pruebas del controlador se encuentran dentro de:
+
+`test/test_cliente.py`
+
+Para ejecutarlas desde la terminal, ubicándose en la carpeta `FACTURACION_S`, se debe utilizar:
+
+```bash
+python -m unittest discover -s test -v
+```
+
+Este comando busca automáticamente las pruebas dentro de la carpeta `test` y las ejecuta.
 
 Las pruebas incluyen:
 
-🧾 Pruebas basadas en las facturas de la empresa.
-❌ 4 casos de error.
-🟣 3 casos extraordinarios.
+* Creación de la tabla.
+* Eliminación de la tabla.
+* Inserción de clientes.
+* Búsqueda de clientes.
+* Casos de error.
+* Cinco casos exitosos de inserción.
+* Cinco casos exitosos de búsqueda.
+
+**Importante:** las pruebas de base de datos deben ejecutarse sobre una base de datos destinada a pruebas, ya que el fixture prepara y limpia la tabla `clientes` antes de cada prueba.
+
+## 6️⃣ Resultado esperado
+
+Al ejecutar las pruebas, el programa mostrará en la terminal el resultado de las pruebas realizadas.
 
 Si todas las pruebas funcionan correctamente, se mostrará un resultado indicando que las pruebas fueron ejecutadas satisfactoriamente.
 
+---
+
 ## 🖥️ Ejecución de la interfaz de consola
 
-El proyecto cuenta con una interfaz de usuario por consola que permite ingresar la información del cliente y consultar el valor de la facturación.
+El proyecto cuenta con una interfaz de usuario por consola que permite registrar clientes y consultar su información almacenada en PostgreSQL.
 
 La interfaz se encuentra en:
 
-```
+```text
 FACTURACION_S/
 └── src/
-    └── view/
-        └── console/
-            └── consola_sensores.py
+    └── view_console/
+        └── crear_cliente.py
 ```
 
-## ▶️ Pasos para ejecutar la interfaz de consola
+### ▶️ Pasos para ejecutar la interfaz de consola
 
-### 1️⃣ Abrir una terminal
+#### 1. Abrir una terminal
 
 Ubícate en la carpeta principal del proyecto:
 
+```bash
 cd FACTURACION_S
+```
 
-### 2️⃣ Ejecutar la consola
+#### 2. Ejecutar la consola
 
-Ejecuta el archivo de la interfaz mediante:
+Ejecuta el siguiente comando:
 
-python src/view/console/consola_sensores.py
+```bash
+python -m src.view_console.crear_cliente
+```
 
-Si tu equipo utiliza python3, puedes ejecutar:
+#### 3. Seleccionar una opción
 
-python3 src/view/console/consola_sensores.py
+Al iniciar el programa aparecerá el siguiente menú:
 
-### 3️⃣ Ingresar los datos del cliente
+```text
+===== SISTEMA DE CLIENTES =====
 
-Al iniciar el programa, la consola solicitará tres datos:
+1. Crear tabla
+2. Registrar cliente
+3. Buscar cliente
+4. Eliminar tabla
+5. Salir
 
-Nombre del cliente
+Seleccione una opción:
+```
 
-Ingrese el nombre del cliente:
-
-Ingresa el nombre o identificador del cliente.
-
-Número de sensores activos
-
-Ingrese el número de sensores activos que posee el cliente:
-
-Ingresa la cantidad de servicios o sensores que tiene contratados el cliente.
-
-Valor de cada sensor
-
-Ingrese el valor de cada sensor:
-
-Ingresa el valor unitario correspondiente al servicio.
-
-### 4️⃣ Seleccionar una opción
-
-Después de ingresar los datos, aparecerá el siguiente menú:
-
------------------------
-MENU
------------------------
-1. Calcular valor factura
-2. Generar factura
-3. Salir
------------------------
-
-### 5️⃣ Calcular el valor de la factura
+#### 4. Crear la tabla
 
 Selecciona la opción:
 
+```text
 1
+```
 
-El programa calculará y mostrará el valor a pagar por el cliente, utilizando el número de servicios y el valor unitario ingresados.
+El programa ejecutará la operación de creación de la tabla `clientes` en PostgreSQL.
 
-### 6️⃣ Generar la factura
+#### 5. Registrar un cliente
+
+Selecciona la opción:
+
+```text
+2
+```
+
+La consola solicitará los siguientes datos:
+
+* NIT del cliente.
+* Nombre del cliente.
+* Número de servicios.
+* Precio de cada sensor.
+
+Con estos datos se crea un objeto de la clase `Cliente` y se envía al controlador para almacenar la información en PostgreSQL.
+
+#### 6. Buscar un cliente
+
+Selecciona la opción:
+
+```text
+3
+```
+
+El programa solicitará el NIT del cliente que se desea consultar.
+
+Si el cliente se encuentra registrado, se mostrará su información:
+
+* NIT.
+* Nombre del cliente.
+* Número de servicios.
+* Precio por sensor.
+* IVA.
+* Valor total.
+* Fecha de registro.
+
+Si el cliente no existe, el sistema mostrará un mensaje indicando que no se encontró el registro.
+
+#### 7. Eliminar la tabla
+
+Selecciona la opción:
+
+```text
+4
+```
+
+El sistema solicitará una confirmación antes de ejecutar la eliminación de la tabla.
+
+**Advertencia:** esta opción elimina la tabla completa `clientes` y todos los registros almacenados en ella.
+
+#### 8. Salir del programa
 
 Selecciona:
 
-2
+```text
+5
+```
 
-El programa mostrará:
-
-📅 Fecha de realización de la factura.
-💰 Valor antes de IVA.
-🧾 Valor del IVA aplicado.
-💵 Valor total a pagar.
-👤 Información del cliente.
-🔢 Cantidad de sensores activos.
-💲 Precio de cada sensor.
-
-El IVA aplicado en el proceso es del 19%.
-
-### 7️⃣ Salir del programa
-
-Para finalizar la ejecución, selecciona:
-
-3
-
-El programa mostrará:
-
-Hasta luego
+El programa finalizará su ejecución.
 
 ### 🔄 Flujo de interacción
 
 El funcionamiento de la interfaz puede resumirse de la siguiente manera:
 
-👤 Datos del cliente → 🔢 Número de servicios → 💰 Valor unitario → 📋 Menú → 🧮 Cálculo / 🧾 Factura → ✅ Resultado
+**👤 Datos del cliente → 🧠 Objeto Cliente → 🎮 Controlador → 🐘 PostgreSQL → 🔎 Consulta → 📋 Resultado**
 
-La interfaz permite que el usuario interactúe directamente con el sistema mediante la consola y consulte el valor correspondiente a la facturación de los servicios de sensores.
+La interfaz permite que el usuario interactúe directamente con el sistema mediante la consola y gestione la información de los clientes almacenada en la base de datos.
 
 ---
 
 ## 🖼️ Ejecución de la interfaz gráfica (GUI)
 
-Además de la consola, el proyecto cuenta con una **interfaz gráfica de usuario (GUI)** construida con la librería **Kivy**, que permite ingresar los datos del cliente y calcular la factura mediante campos de texto y botones, en lugar de texto por consola.
+En la versión original del proyecto se contemplaba una interfaz gráfica de usuario (GUI) construida con la librería **Kivy**, que permite ingresar los datos del cliente y calcular la factura mediante campos de texto y botones.
 
-La interfaz se encuentra en:
+La interfaz gráfica se encontraba en:
 
-```
+```text
 FACTURACION_S/
 └── src/
     └── view/
@@ -485,47 +691,34 @@ FACTURACION_S/
             └── facturacion_sensores.py
 ```
 
-### 1️⃣ Instalar Kivy
+Si este módulo continúa incluido en la versión actual del repositorio, se puede ejecutar desde la carpeta principal mediante:
 
-Si aún no instalaste las dependencias del proyecto (ver el paso 2️⃣ de la sección de ejecución), instala Kivy con:
-
-```
-pip install kivy
-```
-
-### 2️⃣ Ejecutar la GUI
-
-Desde la carpeta `FACTURACION_S`, ejecuta:
-
-```
+```bash
 python src/view/gui/facturacion_sensores.py
 ```
 
-Si tu equipo utiliza `python3`, puedes ejecutar:
+Para utilizar esta interfaz es necesario tener instalada la librería Kivy:
 
+```bash
+pip install kivy
 ```
-python3 src/view/gui/facturacion_sensores.py
-```
 
-### 3️⃣ Usar la interfaz
+La interfaz original permite:
 
-Al abrirse la ventana, se debe:
+1. Ingresar el nombre del cliente.
+2. Ingresar el número de servicios o sensores.
+3. Ingresar el precio unitario por sensor.
+4. Presionar **Calcular factura** para visualizar el subtotal, el IVA (19 %) y el valor total a pagar.
+5. Presionar **Limpiar** para reiniciar el formulario.
 
-1. Ingresar el **nombre del cliente** (opcional).
-2. Ingresar el **número de servicios / sensores**.
-3. Ingresar el **precio unitario por sensor**.
-4. Presionar **"Calcular factura"** para ver el subtotal, el IVA (19 %) y el valor total a pagar.
-5. Presionar **"Limpiar"** para reiniciar el formulario.
-
-Si algún dato es inválido (vacío, no numérico, cero o negativo), la GUI muestra un mensaje de error amigable debajo de los campos y resalta el campo correspondiente en rojo, sin cerrar ni bloquear la aplicación.
-
-> ℹ️ La GUI intenta reproducir una música de fondo opcional. Si no encuentra el archivo de audio, simplemente arranca sin sonido: esta función no es necesaria para el cálculo de la factura.
+Si algún dato es inválido (vacío, no numérico, cero o negativo), la GUI muestra un mensaje de error amigable.
 
 ---
 
 ## 👥 Autores
 
-**Simon Yepes Cano** - 
+**Simon Yepes Cano**
+
 **Cesar Junior Ramirez**
 
 ---
@@ -538,4 +731,7 @@ Las pruebas unitarias permiten comprobar que los cálculos realizados por el pro
 
 Por otra parte, los **3 casos extraordinarios** permiten comprobar que el programa también pueda trabajar correctamente con situaciones diferentes a las encontradas normalmente en las facturas.
 
+La incorporación de PostgreSQL permite almacenar y consultar la información de los clientes, mientras que el patrón MVC facilita la separación de responsabilidades entre el modelo, el controlador y la interfaz.
+
 Como futura mejora, se plantea incorporar los **meses del servicio como una variable de entrada**, haciendo que el sistema sea más flexible y pueda adaptarse a diferentes periodos de facturación.
+
