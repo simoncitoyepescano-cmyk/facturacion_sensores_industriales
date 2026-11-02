@@ -34,6 +34,8 @@ def guardar_cliente():
 
     return f"Cliente guardado exitosamente: {cliente.nombre_cliente}"
 
+# Buscar cliente
+@app.route('/buscarcliente')
 
 # Calcular el valor de la factura
 @app.route('/valorfactura')
