@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Mostrar el formulario HTML
 @app.route('/')
 def inicio():
-    return render_template("nuevo_cliente.html")
+    return render_template("crear_cliente.html")
 
 @app.route('/crear_tablas')
 def crear_tablas():
@@ -54,6 +54,20 @@ def calcular_valor_factura():
     )
 
     return f"El valor de la factura de {nombre} fue de {valor_factura}"
+
+@app.route('/formulario_buscar_cliente')
+def formulario_buscar_cliente():
+    return render_template("buscar_cliente.html")
+
+# Buscar un cliente por su NIT
+@app.route('/buscar_cliente', methods=['GET'])
+def buscar_cliente():
+
+    nit = request.args["nit"]
+
+    cliente = ClienteController.buscar_cliente(nit)
+
+    return render_template("buscar_cliente.html", cliente=cliente)
 
 
 if __name__ == '__main__':

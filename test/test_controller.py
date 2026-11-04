@@ -3,6 +3,7 @@ import unittest
 import psycopg2
 
 from src.controller.cliente_controller import ClienteController
+from src.model.logica_sensores import Cliente
 
 
 class TestClienteController(unittest.TestCase):

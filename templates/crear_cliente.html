@@ -3,42 +3,132 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Cliente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Cliente | Facturación</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/estilos.css') }}">
 </head>
+
 <body>
 
-    <h1>Registro de Clientes</h1>
+<div class="layout">
 
-    <form action="/guardar_cliente" method="POST">
+    <aside class="sidebar">
 
-        <label>NIT del cliente:</label>
-        <input type="text" name="nit" required>
-        <br><br>
+        <div class="brand">
+            <h2>Facturación</h2>
+            <span>Sistema de gestión de sensores</span>
+        </div>
 
-        <label>Nombre del cliente:</label>
-        <input type="text" name="nombre_cliente" required>
-        <br><br>
+        <p class="menu-title">MENÚ PRINCIPAL</p>
 
-        <label>Número de servicios:</label>
-        <input type="number" name="numero_servicios" min="1" required>
-        <br><br>
+        <nav class="menu">
+            <a href="/" class="active">Registrar cliente</a>
+            <a href="/formulario_buscar_cliente">Buscar cliente</a>
+        </nav>
 
-        <label>Precio de cada sensor:</label>
-        <input type="number" name="precio_sensor" min="0.01" step="0.01" required>
-        <br><br>
+        <div class="sidebar-bottom">
+            Sistema de Facturación<br>
+            Versión 1.0
+        </div>
 
-        <button type="submit">Guardar cliente</button>
+    </aside>
 
-        <p>
-            <h1>Uso por primera vez</h1>
-            <p>
-                si aun no ha creado la tabla en la base de datos
+    <main class="main">
 
-                <a href="/crear_tablas"> Haga click aqui</a>
-            </p>
-        </p>
+        <header class="topbar">
+            <p>Panel de administración / Registro</p>
+            <div class="user">A</div>
+        </header>
 
-    </form>
+        <div class="container">
+
+            <div class="header">
+                <h1>Registro de clientes</h1>
+                <p>Administra la información de tus clientes y sus servicios de sensores.</p>
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-card">
+                    <p>Módulo actual</p>
+                    <h3>Registro de clientes</h3>
+                </div>
+
+                <div class="info-card">
+                    <p>Impuesto aplicado</p>
+                    <h3>IVA del 19%</h3>
+                </div>
+
+            </div>
+
+            <section class="card">
+
+                <h2>Información del cliente</h2>
+
+                <p class="card-description">
+                    Completa los siguientes campos para registrar un nuevo cliente.
+                </p>
+
+                <form action="/guardar_cliente" method="POST">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label>NIT del cliente</label>
+                            <input type="text"
+                                   name="nit"
+                                   placeholder="Ej. 900123456"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nombre del cliente</label>
+                            <input type="text"
+                                   name="nombre_cliente"
+                                   placeholder="Nombre o razón social"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Número de servicios</label>
+                            <input type="number"
+                                   name="numero_servicios"
+                                   min="1"
+                                   placeholder="Cantidad de servicios"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Precio de cada sensor</label>
+                            <input type="number"
+                                   name="precio_sensor"
+                                   min="0.01"
+                                   step="0.01"
+                                   placeholder="Valor unitario"
+                                   required>
+                        </div>
+
+                    </div>
+
+                    <button type="submit">
+                        Guardar cliente
+                    </button>
+
+                </form>
+
+            </section>
+
+        </div>
+
+        <footer class="footer">
+            Sistema de Facturación de Sensores · 2026
+        </footer>
+
+    </main>
+
+</div>
 
 </body>
 </html>

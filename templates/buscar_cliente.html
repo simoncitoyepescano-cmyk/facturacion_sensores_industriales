@@ -1,23 +1,123 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Buscar Cliente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Cliente | Facturación</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/estilos.css') }}">
 </head>
+
 <body>
 
-    <h1>Buscar Cliente</h1>
+<div class="layout">
 
-    <form action="/buscar_cliente" method="GET">
+    <aside class="sidebar">
 
-        <label>Ingrese el NIT del cliente:</label>
-        <input type="text" name="nit" required>
+        <div class="brand">
+            <h2>Facturación</h2>
+            <span>Sistema de gestión de sensores</span>
+        </div>
 
-        <br><br>
+        <p class="menu-title">MENÚ PRINCIPAL</p>
 
-        <button type="submit">Buscar cliente</button>
+        <nav class="menu">
+            <a href="/">Registrar cliente</a>
+            <a href="/formulario_buscar_cliente" class="active">
+                Buscar cliente
+            </a>
+        </nav>
 
-    </form>
+        <div class="sidebar-bottom">
+            Sistema de Facturación<br>
+            Versión 1.0
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <p>Panel de administración / Consultas</p>
+            <div class="user">A</div>
+        </header>
+
+        <div class="container">
+
+            <div class="header">
+                <h1>Consulta de clientes</h1>
+                <p>Consulta la información de tus clientes utilizando su NIT.</p>
+            </div>
+
+            <section class="card">
+
+                <h2>Buscar cliente</h2>
+
+                <p class="card-description">
+                    Introduce el NIT para consultar la información registrada.
+                </p>
+
+                <form action="/buscar_cliente" method="GET">
+
+                    <div class="form-group">
+                        <label>NIT del cliente</label>
+
+                        <input type="text"
+                               name="nit"
+                               placeholder="Ingrese el NIT del cliente"
+                               value="{{ request.args.get('nit', '') }}"
+                               required>
+                    </div>
+
+                    <button type="submit">
+                        Buscar cliente
+                    </button>
+
+                </form>
+
+                {% if cliente %}
+
+                <div class="resultado">
+
+                    <h2>Información del cliente</h2>
+
+                    <p><strong>NIT:</strong> {{ cliente[0] }}</p>
+
+                    <p><strong>Nombre:</strong> {{ cliente[1] }}</p>
+
+                    <p><strong>Número de servicios:</strong> {{ cliente[2] }}</p>
+
+                    <p><strong>Precio por sensor:</strong> ${{ cliente[3] }}</p>
+
+                    <p><strong>IVA:</strong> ${{ cliente[4] }}</p>
+
+                    <p><strong>Valor total:</strong> ${{ cliente[5] }}</p>
+
+                    <p><strong>Fecha:</strong> {{ cliente[6] }}</p>
+
+                </div>
+
+                {% elif request.args.get('nit') %}
+
+                <div class="error">
+                    No se encontró ningún cliente con ese NIT.
+                </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+
+        <footer class="footer">
+            Sistema de Facturación de Sensores · 2026
+        </footer>
+
+    </main>
+
+</div>
 
 </body>
 </html>
