@@ -1,4 +1,3 @@
-
 from src.controller import ClienteController
 from src.model.logica_sensores import Cliente
 
