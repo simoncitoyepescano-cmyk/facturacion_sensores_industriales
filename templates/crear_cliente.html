@@ -1,9 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Registrar Cliente | Facturación</title>
 
     <link rel="stylesheet"
@@ -14,6 +15,7 @@
 
 <div class="layout">
 
+    <!-- BARRA LATERAL -->
     <aside class="sidebar">
 
         <div class="brand">
@@ -24,8 +26,15 @@
         <p class="menu-title">MENÚ PRINCIPAL</p>
 
         <nav class="menu">
-            <a href="/" class="active">Registrar cliente</a>
-            <a href="/formulario_buscar_cliente">Buscar cliente</a>
+
+            <a href="/" class="active">
+                Registrar cliente
+            </a>
+
+            <a href="/formulario_buscar_cliente">
+                Buscar cliente
+            </a>
+
         </nav>
 
         <div class="sidebar-bottom">
@@ -35,82 +44,131 @@
 
     </aside>
 
+
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="main">
 
         <header class="topbar">
+
             <p>Panel de administración / Registro</p>
+
             <div class="user">A</div>
+
         </header>
+
 
         <div class="container">
 
+            <!-- ENCABEZADO -->
             <div class="header">
+
                 <h1>Registro de clientes</h1>
-                <p>Administra la información de tus clientes y sus servicios de sensores.</p>
+
+                <p>
+                    Administra la información de tus clientes
+                    y sus servicios de sensores.
+                </p>
+
             </div>
 
+
+            <!-- TARJETAS INFORMATIVAS -->
             <div class="info-grid">
 
                 <div class="info-card">
+
                     <p>Módulo actual</p>
+
                     <h3>Registro de clientes</h3>
+
                 </div>
 
                 <div class="info-card">
+
                     <p>Impuesto aplicado</p>
+
                     <h3>IVA del 19%</h3>
+
                 </div>
 
             </div>
 
+
+            <!-- REGISTRO DE CLIENTES -->
             <section class="card">
 
                 <h2>Información del cliente</h2>
 
                 <p class="card-description">
-                    Completa los siguientes campos para registrar un nuevo cliente.
+                    Completa los siguientes campos para registrar
+                    un nuevo cliente.
                 </p>
+
 
                 <form action="/guardar_cliente" method="POST">
 
                     <div class="form-grid">
 
                         <div class="form-group">
+
                             <label>NIT del cliente</label>
-                            <input type="text"
-                                   name="nit"
-                                   placeholder="Ej. 900123456"
-                                   required>
+
+                            <input
+                                type="text"
+                                name="nit"
+                                placeholder="Ej. 900123456"
+                                required
+                            >
+
                         </div>
 
+
                         <div class="form-group">
+
                             <label>Nombre del cliente</label>
-                            <input type="text"
-                                   name="nombre_cliente"
-                                   placeholder="Nombre o razón social"
-                                   required>
+
+                            <input
+                                type="text"
+                                name="nombre_cliente"
+                                placeholder="Nombre o razón social"
+                                required
+                            >
+
                         </div>
 
+
                         <div class="form-group">
+
                             <label>Número de servicios</label>
-                            <input type="number"
-                                   name="numero_servicios"
-                                   min="1"
-                                   placeholder="Cantidad de servicios"
-                                   required>
+
+                            <input
+                                type="number"
+                                name="numero_servicios"
+                                min="1"
+                                placeholder="Cantidad de servicios"
+                                required
+                            >
+
                         </div>
 
+
                         <div class="form-group">
+
                             <label>Precio de cada sensor</label>
-                            <input type="number"
-                                   name="precio_sensor"
-                                   min="0.01"
-                                   step="0.01"
-                                   placeholder="Valor unitario"
-                                   required>
+
+                            <input
+                                type="number"
+                                name="precio_sensor"
+                                min="0.01"
+                                step="0.01"
+                                placeholder="Valor unitario"
+                                required
+                            >
+
                         </div>
 
                     </div>
+
 
                     <button type="submit">
                         Guardar cliente
@@ -120,10 +178,104 @@
 
             </section>
 
+
+            <!-- ADMINISTRACIÓN DE LA TABLA -->
+            <section class="card" style="margin-top: 30px;">
+
+                <h2>Administración de clientes</h2>
+
+                <p class="card-description">
+                    Gestiona la tabla y los registros almacenados
+                    en la base de datos.
+                </p>
+
+
+                <!-- CREAR TABLA -->
+                <div class="form-group">
+
+                    <label>Crear tabla</label>
+
+                    <p class="card-description">
+                        Crea la tabla de clientes en PostgreSQL
+                        cuando todavía no exista.
+                    </p>
+
+                    <form action="/crear_tablas" method="POST">
+
+                        <button type="submit">
+                            Crear tabla de clientes
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <hr style="margin: 28px 0; border: 1px solid #e8edf5;">
+
+
+                <!-- ELIMINAR CLIENTE -->
+                <div class="form-group">
+
+                    <h2>Eliminar cliente</h2>
+
+                    <p class="card-description">
+                        Introduce el NIT del cliente que deseas eliminar.
+                    </p>
+
+                    <form
+                        action="/eliminar_cliente"
+                        method="POST"
+                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.');"
+                    >
+
+                        <div class="form-group">
+
+                            <label>NIT del cliente</label>
+
+                            <input
+                                type="text"
+                                name="nit"
+                                placeholder="Ingrese el NIT del cliente"
+                                required
+                            >
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            style="background: #dc2626;"
+                        >
+                            Eliminar cliente
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <!-- MENSAJES DEL SISTEMA -->
+            {% if mensaje %}
+
+                <div class="resultado" style="margin-top: 25px;">
+
+                    <p>{{ mensaje }}</p>
+
+                </div>
+
+            {% endif %}
+
+
         </div>
 
+
+        <!-- PIE DE PÁGINA -->
         <footer class="footer">
+
             Sistema de Facturación de Sensores · 2026
+
         </footer>
 
     </main>

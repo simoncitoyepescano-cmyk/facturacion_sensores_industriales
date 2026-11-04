@@ -71,6 +71,32 @@ def buscar_cliente():
 
     return render_template("buscar_cliente.html", cliente=cliente)
 
+@app.route('/crear_tablas', methods=['POST'])
+def crear_tablas():
+    ClienteController.crear_tabla()
+    return redirect('/')
+
+
+@app.route('/eliminar_cliente', methods=['POST'])
+def eliminar_cliente():
+    nit = request.form["nit"]
+
+    eliminado = ClienteController.eliminar_cliente(nit)
+
+    if eliminado:
+        mensaje = "Cliente eliminado correctamente."
+    else:
+        mensaje = "No existe un cliente con ese NIT."
+
+    return render_template(
+        "crear_cliente.html",
+        mensaje=mensaje
+    )
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+

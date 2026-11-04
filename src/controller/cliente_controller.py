@@ -167,3 +167,33 @@ class ClienteController:
                 cursor.close()
             if conexion:
                 conexion.close()
+@staticmethod
+def eliminar_cliente(nit: str):
+    conexion = None
+    cursor = None
+
+    try:
+        conexion = ClienteController.obtener_conexion()
+        cursor = conexion.cursor()
+
+        cursor.execute(
+            "DELETE FROM clientes WHERE nit = %s",
+            (nit,)
+        )
+
+        eliminado = cursor.rowcount > 0
+
+        conexion.commit()
+
+        return eliminado
+
+    except Exception as error:
+        if conexion:
+            conexion.rollback()
+        raise error
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conexion:
+            conexion.close()
