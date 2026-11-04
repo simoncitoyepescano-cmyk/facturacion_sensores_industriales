@@ -69,9 +69,19 @@ def buscar_cliente():
 
 @blueprint.route('/crear_tablas', methods=['POST'])
 def crear_tablas():
-    ClienteController.crear_tabla()
-    return redirect('/')
 
+    try:
+        clienteController.crear_tabla()
+
+        mensaje = "Tabla de clientes creada exitosamente."
+
+    except psycopg2.errors.DuplicateTable:
+        mensaje = "La tabla de clientes ya existe."
+
+    except Exception as e:
+        mensaje = f"Error al crear la tabla: {e}"
+
+    return render_template("crear_cliente.html", mensaje=mensaje)
 
 @blueprint.route('/eliminar_cliente', methods=['POST'])
 def eliminar_cliente():
