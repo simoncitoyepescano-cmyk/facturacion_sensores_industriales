@@ -1,3 +1,30 @@
-"Calcular el valor de factura de un cliente, que de su nit su n servicios y su precio sensor"
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcular Valor Factura</title>
+</head>
+<body>
 
-"Si no esta ese campo creado ent que haya un boton que pregunte si lo desea crear para ese cliente y calcular el valor de la factura"
+    <h1>Calcular Valor Factura</h1>
+
+    <form action="/valorfactura" method="POST">
+
+        <label>NIT del cliente:</label>
+        <input type="text" name="nit" required>
+        <br><br>
+
+        <label>Número de servicios:</label>
+        <input type="number" name="numero_servicios" min="1" required>
+        <br><br>
+
+        <label>Precio de cada sensor:</label>
+        <input type="number" name="precio_sensor" min="0.01" step="0.01" required>
+        <br><br>
+
+        <button type="submit">Calcular Factura</button>
+
+    </form>
+
+</body>
+</html>
